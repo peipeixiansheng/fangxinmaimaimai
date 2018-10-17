@@ -52,9 +52,11 @@
                             <div id="focus-box" class="focus-box">
                                 <el-carousel height="341px">
                                     <el-carousel-item v-for="item in sliderlist" :key="item.id">
-                                        <a href="#">
+                                        <!-- <a href="#"> -->
+                                        <router-link :to="'/detail/'+item.id">
                                             <img :src="item.img_url" alt="item.title" style="height:100%">
-                                        </a>
+                                        </router-link>
+                                        <!-- </a> -->
                                     </el-carousel-item>
                                 </el-carousel>
                             </div>
@@ -64,14 +66,16 @@
                     <div class="left-220">
                         <ul class="side-img-list">
                             <li v-for="(item, index) in toplist" :key="item.id">
+                                <router-link :to="'/detail/'+item.id">
                                 <div class="img-box">
                                     <label>{{index+1}}</label>
                                     <img :src="item.img_url">
                                 </div>
                                 <div class="txt-box">
-                                    <a href="/goods/show-98.html">{{item.title}}</a>
+                                    <a>{{item.title}}</a>
                                     <span>{{item.add_time|addTime("YYYY年MM月DD日")}}</span>
                                 </div>
+                                </router-link>
                             </li>
                         </ul>
                     </div>
@@ -118,43 +122,43 @@
     </div>
 </template>
 <script>
-    // 时间转换
-    // import moment from 'moment';
-    // import moment from 'moment';
-    export default{
-        name:'index',
-        data:function(){
-            return{
-                catelist:[],
-                sliderlist:[],
-                toplist:[],
-                orderlist:[]
-            }           
-        },
-        // 生命周期函数，在vue创建完毕之后，在这里才能访问到vue组件中的内容
-        created(){
-            this.$axios.get('/site/goods/gettopdata/goods').then(response=>{              
-                this.catelist=response.data.message.catelist;
-                this.sliderlist=response.data.message.sliderlist;
-                this.toplist=response.data.message.toplist
-            });
-            this.$axios.get('/site/goods/getgoodsgroup').then(res=>{
-                // console.log(res);
-                this.orderlist=res.data.message;
-            })
-        },
-        // 局部过滤器（迁移到全局中去）
-        // filters:{
-        //     addTime:(value)=>{
-        //         // console.log(value);
-        //         return moment(value).format("YYYY年MM月DD日");
-        //     }
-        // }
-    }
+// 时间转换
+// import moment from 'moment';
+// import moment from 'moment';
+export default {
+    name: 'index',
+    data: function () {
+        return {
+            catelist: [],
+            sliderlist: [],
+            toplist: [],
+            orderlist: []
+        }
+    },
+    // 生命周期函数，在vue创建完毕之后，在这里才能访问到vue组件中的内容，Ajax请求
+    created() {
+        this.$axios.get('/site/goods/gettopdata/goods').then(response => {
+            this.catelist = response.data.message.catelist;
+            this.sliderlist = response.data.message.sliderlist;
+            this.toplist = response.data.message.toplist
+        });
+        this.$axios.get('/site/goods/getgoodsgroup').then(res => {
+            // console.log(res);
+            this.orderlist = res.data.message;
+        })
+    },
+    // 局部过滤器（迁移到全局中去）
+    // filters:{
+    //     addTime:(value)=>{
+    //         // console.log(value);
+    //         return moment(value).format("YYYY年MM月DD日");
+    //     }
+    // }
+}
 </script>
 <style>
-    .el-carousel__indicator .el-carousel__button{
-        background-color: #00f;
-        opacity: 0.3;
-    }
+.el-carousel__indicator .el-carousel__button {
+  background-color: #00f;
+  opacity: 0.3;
+}
 </style>
