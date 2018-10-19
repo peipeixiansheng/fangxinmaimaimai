@@ -1,5 +1,10 @@
 <template>
     <div>
+        <!-- 正在加载中 -->
+        <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
+            <img src="../assets/img/1.gif" alt="">
+        </div>
+        <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
@@ -169,7 +174,7 @@
             <div class="top">返回顶端</div>
         </BackTop>
         <!-- 加入购物车时飞的图片 -->
-        <img class="fiy-img" ref="fiyImg" :src="imglist.length==0?'':imglist[0].original_path" alt="">
+        <img class="fiy-img" style="display:none" ref="fiyImg" :src="imglist.length==0?'':imglist[0].original_path" alt="">
     </div>
 </template>
 <script>
@@ -178,6 +183,7 @@ export default {
     name: "detail",
     data: function () {
         return {
+            option:true,
             ID: "",
             goodsinfo: {},
             hotgoodslist: [],
@@ -218,6 +224,7 @@ export default {
             // 每次开始的时候显示商品介绍
             this.selectIndex = 0;
             this.$axios.get("/site/goods/getgoodsinfo/" + this.ID).then(res => {
+                this.option=false;
                 // console.log(res);
                 this.goodsinfo = res.data.message.goodsinfo;
                 this.hotgoodslist = res.data.message.hotgoodslist;
@@ -292,7 +299,8 @@ export default {
             let byCart = $(this.$parent.$refs.byCart).offset();
             // console.log(byCart);
             // console.log($(this.$refs.fiyImg));
-            $(this.$refs.fiyImg).stop().showgit().addClass('animate').css(startPos).animate({ left: byCart.left, top: byCart.top }, 1000, () => {
+            $(this.$refs.fiyImg).show().stop().addClass('animate').css(startPos).animate({ left: byCart.left, top: byCart.top }, 1000, () => {
+                this.$message.success('加入购物车成功');
                 $(this.$refs.fiyImg).hide().removeClass('animate');
                 this.$store.commit('addCart', {
                     // 商品id
@@ -311,7 +319,8 @@ export default {
         this.getComments();
     },
     //   观察路由数据改变
-    watch: {        '$route'(to) {
+    watch: {'$route'(to) {
+            this.option=true;
             //   console.log(to);
             this.ID = to.params.ID;
             this.goodsIdDetail();
@@ -355,12 +364,12 @@ export default {
   position: absolute;
   width: 50px;
   height: 50px;
-  display: none;
+  /* display: none; */
 }
 .fiy-img.animate {
   opacity: 0;
   transform: rotate(3600deg) scale(0.4, 0.4);
-   transition: transform 1s, opacity 2s;
+  transition: transform 1s, opacity 2s;
 }
 </style>
 

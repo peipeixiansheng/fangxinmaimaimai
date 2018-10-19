@@ -1,5 +1,10 @@
 <template>
     <div>
+         <!-- 正在加载中 -->
+        <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
+            <img src="../assets/img/1.gif" alt="">
+        </div>
+        <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
@@ -102,11 +107,11 @@
                     <div class="cart-foot clearfix">
                         <div class="right-box">
                             <router-link to="/">
-                            <button class="button">继续购物</button>
+                                <button class="button">继续购物</button>
                             </router-link>
-                            <router-link to="/order">
-                            <button class="submit">立即结算</button>
-                            </router-link>
+                            <!-- <router-link :to="'/order'+ids"> -->
+                            <button @click="subOrder" class="submit">立即结算</button>
+                            <!-- </router-link> -->
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -120,9 +125,10 @@ export default {
     name: "shopCart",
     data: function () {
         return {
+            option:true,
             // 购物车商品数据
             goodList: [],
-
+            ids: '',
         };
     },
     created() {
@@ -134,6 +140,7 @@ export default {
         ids = ids.slice(0, -1);
         //   console.log(ids);
         this.$axios.get(`site/comment/getshopcargoods/${ids}`).then(res => {
+            this.option=false;
             // console.log(res);
             res.data.message.forEach(v => {
                 v.buycount = this.$store.state.shopCartData[v.id];
@@ -157,13 +164,13 @@ export default {
                 type: 'warning'
             }).then(() => {
                 // 删除页码中的数据
-                this.goodList.forEach((v,index)=>{
-                    if(v.id==id){
-                        this.goodList.splice(index,1);
+                this.goodList.forEach((v, index) => {
+                    if (v.id == id) {
+                        this.goodList.splice(index, 1);
                     }
                 });
                 //删除数据
-                this.$store.commit('upDelete',id);
+                this.$store.commit('upDelete', id);
                 this.$message({
                     type: 'success',
                     message: '删除成功!'
@@ -174,6 +181,28 @@ export default {
                     message: '已取消删除'
                 });
             });
+        },
+        subOrder() {
+            
+            if (this.goodList.length > 0) {
+                this.goodList.forEach(v => {
+                    if (v.selected == true) {
+                        this.ids += v.id;
+                        this.ids += ',';
+                    }
+                })
+                this.ids = this.ids.slice(0, -1);
+                // console.log(this.ids);
+                if (this.ids.length > 0) {
+                    this.$router.push('/order/' + this.ids)
+                } else {
+                    this.$message.error('请先选中商品哦')
+                }
+
+            } else {
+                this.$message.error('购物车空空如也！！');
+
+            }
         }
     },
     computed: {

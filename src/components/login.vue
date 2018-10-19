@@ -56,7 +56,7 @@ export default {
                 }).then(res=>{
                     // console.log(res);
                     if(res.data.status==1){
-                        this.$Message.warning(res.data.message);  
+                        this.$message.warning(res.data.message);  
                     }else if(res.data.status==0){
                         this.$Message.success('登录成功，欢迎回来');
                         // this.$router.push('/order');

@@ -1,5 +1,10 @@
 <template>
     <div>
+        <!-- 正在加载中 -->
+        <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
+            <img src="../assets/img/1.gif" alt="">
+        </div>
+        <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
@@ -129,6 +134,7 @@ export default {
     name: 'index',
     data: function () {
         return {
+            option:true,
             catelist: [],
             sliderlist: [],
             toplist: [],
@@ -143,6 +149,7 @@ export default {
             this.toplist = response.data.message.toplist
         });
         this.$axios.get('/site/goods/getgoodsgroup').then(res => {
+            this.option=false;
             // console.log(res);
             this.orderlist = res.data.message;
         })

@@ -20,9 +20,11 @@
                         </span>
                         <!-- 登录时显示 -->
                         <span v-show="$store.state.isLogin==true">
-                            <a href="" class="">会员中心</a>
+                            <router-link to="/userInfo">
+                                会员中心
+                            </router-link>
                             <strong>|</strong>
-                            <a  @click="logout">退出</a>
+                            <a @click="logout">退出</a>
                             <strong>|</strong>
                         </span>
                         <!-- <a href="" class=""> -->
@@ -118,13 +120,13 @@
         </div>
     </div>
 </template>
-
 <script>
 import $ from 'jquery';
 export default {
     name: "app",
     data: function () {
-        return {};
+        return {
+        };
     },
     //   生命周期函数（挂载完成之后,操做dom元素）
     mounted() {
@@ -157,9 +159,9 @@ export default {
                             message: '退出成功，记得常回来哦！',
                         });
                         this.$router.push('/login');
-                        this.$store.commit('chekedLogin',false)
-                    }else{
-                         this.$message({
+                        this.$store.commit('chekedLogin', false)
+                    } else {
+                        this.$message({
                             type: 'success',
                             message: '退出失败，请重新操作！',
                         });
@@ -171,9 +173,9 @@ export default {
                     message: '你是最棒的，爱你哦！！'
                 });
             });
-        }
-    }
-};
+        },
+    },
+}
 </script>
 
 <style>
