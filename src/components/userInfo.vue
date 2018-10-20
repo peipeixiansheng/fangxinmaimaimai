@@ -1,5 +1,10 @@
 <template>
     <div class="el-row">
+         <!-- 正在加载中 -->
+        <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
+            <img src="../assets/img/2.gif" alt="">
+        </div>
+        <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="el-col el-col-24">
             <div class="comp">
                 <div class="tmpl routeanimate">
@@ -87,12 +92,14 @@ export default {
     name: 'userInfo',
     data() {
         return {
-
+            option:true,
         }
     },
     created() {
-
-    }
+        setTimeout(() => {
+            this.option=false
+        }, 1000);
+    },
 }
 </script>
 <style>

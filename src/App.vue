@@ -86,7 +86,10 @@
                 </div>
             </div>
         </div>
-        <router-view></router-view>
+        <!-- 设置keep-alive组件缓存 -->
+        <keep-alive include='index'>
+            <router-view></router-view>
+        </keep-alive>
         <div class="footer">
             <div class="section">
                 <div class="foot-nav">

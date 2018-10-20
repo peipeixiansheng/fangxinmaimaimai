@@ -2,7 +2,7 @@
     <div>
         <!-- 正在加载中 -->
         <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
-            <img src="../assets/img/1.gif" alt="">
+            <img src="../assets/img/2.gif" alt="">
         </div>
         <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="section">

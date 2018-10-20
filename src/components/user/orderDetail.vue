@@ -1,5 +1,10 @@
 <template>
     <div class="bg-wrap" style="min-height: 765px;">
+         <!-- 正在加载中 -->
+        <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
+            <img src="../../assets/img/2.gif" alt="">
+        </div>
+        <div class="v-modal" tabindex="0" style="z-index: 2003;" v-if="option"></div>
         <div class="sub-tit">
             <a href="javascript:void(0)" class="add" @click="$router.back()">
                 <i class="iconfont icon-reply"></i>返回</a>
@@ -132,6 +137,7 @@ export default {
     name: 'orderDetail',
     data() {
         return {
+            option:true,
             // 订单id
             orderid: '',
             // 商品列表
@@ -148,6 +154,7 @@ export default {
     methods: {
         send() {
             this.$axios.get("site/validate/order/getorderdetial/" + this.orderid).then(res => {
+                this.option=false;
                 // console.log(res);
                 this.goodslist = res.data.message.goodslist;
                 this.orderinfo = res.data.message.orderinfo;

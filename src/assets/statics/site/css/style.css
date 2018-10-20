@@ -74,7 +74,7 @@ table { border-collapse:collapse; border-spacing:0; }
     .nav-tit a{ margin-left:10px; color:#333;  }
     .nav-tit a:hover,.nav-tit a.selected{ color:#34ad2a; }
     .nav-tit i{ margin-left:10px; color:#e0e0e0; }
-.sub-tit{ margin:0 50px 10px; padding-top:35px; height:42px; border-bottom:1px solid #e0e0e0; font-size:16px; }
+.sub-tit{ margin:0 50px 10px; padding-top:35px; height:auto; border-bottom:1px solid #e0e0e0; font-size:16px; }
     .sub-tit a.add{ display:block; margin-right:10px; float:right; color:#23ac38; font-size:14px; line-height:42px; }
     .sub-tit a.add i{ display:inline-block; margin-right:5px; color:#23ac38; font-size:14px; }
     .sub-tit ul{ display:inline-block; }
