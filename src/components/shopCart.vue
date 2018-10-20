@@ -1,6 +1,6 @@
 <template>
     <div>
-         <!-- 正在加载中 -->
+        <!-- 正在加载中 -->
         <div tabindex="-1" role="dialog" aria-modal="true" aria-label="dialog" class="el-message-box__wrapper" style="z-index: 2003;" v-if="option">
             <img src="../assets/img/2.gif" alt="">
         </div>
@@ -125,7 +125,7 @@ export default {
     name: "shopCart",
     data: function () {
         return {
-            option:true,
+            option: true,
             // 购物车商品数据
             goodList: [],
             ids: '',
@@ -139,16 +139,20 @@ export default {
         }
         ids = ids.slice(0, -1);
         //   console.log(ids);
-        this.$axios.get(`site/comment/getshopcargoods/${ids}`).then(res => {
-            this.option=false;
-            // console.log(res);
-            res.data.message.forEach(v => {
-                v.buycount = this.$store.state.shopCartData[v.id];
-                // 给加个开关
-                v.selected = true;
+        if (ids.length != 0) {
+            this.$axios.get(`site/comment/getshopcargoods/${ids}`).then(res => {
+                this.option = false;
+                // console.log(res);
+                res.data.message.forEach(v => {
+                    v.buycount = this.$store.state.shopCartData[v.id];
+                    // 给加个开关
+                    v.selected = true;
+                });
+                this.goodList = res.data.message;
             });
-            this.goodList = res.data.message;
-        });
+        }else{
+            this.option=false;
+        }
     },
     methods: {
         // 改变数量，同时改变导航栏购物车的数量
@@ -183,7 +187,7 @@ export default {
             });
         },
         subOrder() {
-            
+
             if (this.goodList.length > 0) {
                 this.goodList.forEach(v => {
                     if (v.selected == true) {
